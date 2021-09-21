@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parse_specifier_i.c                                :+:    :+:            */
+/*   philosophers.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
+/*   By: pdruart <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/09/01 14:55:02 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/09/01 14:55:02 by pdruart       ########   odam.nl         */
+/*   Created: 2021/09/20 12:27:34 by pdruart       #+#    #+#                 */
+/*   Updated: 2021/09/21 15:47:07 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include <philosophers.h>
 
-char	*parse_specifier_i(va_list *arg, t_conv *data)
+void	test(void)
 {
-	data->specifier = 'd';
-	return (parse_specifier_d(arg, data));
+	return ;
+}
+
+int	main(int argc, char **argv)
+{
+	if (argc != 4 && argc != 5)
+		return (0);
+	if (argv)
+		return (0);
 }
