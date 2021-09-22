@@ -1,6 +1,6 @@
 NAME := philo
 
-CFLAGS ?= -Wall -Werror -Wextra
+CFLAGS ?= -Wall -Werror -Wextra -pthread
 ifdef DEBUG
 CFLAGS := -g $(CFLAGS)
 endif
