@@ -6,7 +6,7 @@
 /*   By: pdruart <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/20 12:27:34 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/09/23 17:59:00 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/09/26 14:17:53 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,35 @@ void	*philosopher(void *arg)
 //odd grab right fork first, even grab left fork first
 int	main(int argc, char **argv)
 {
-	struct timeval	time;
-	pthread_t		*phils;
-	int				i;
+	t_table			table;
 
-	phils = malloc(sizeof(pthread_t) * 4);
-	pthread_mutex_init(&mutextest, NULL);
-	i = 0;
-	while (i < 4)
-	{
-		pthread_create(&phils[i], NULL, &philosopher, NULL);
-		i++;
-	}
-	usleep(500000);
-	gettimeofday(&time, NULL);
-	printf("timemain:%li.%i\n", time.tv_sec, time.tv_usec);
-	i = 0;
-	while (i < 4)
-	{
-		pthread_join(phils[i], NULL);
-		printf("received %i\n", i);
-		i++;
-	}
-	free(phils);
 	if (argc != 5 && argc != 6)
 		return (0);
+	if (prepare_table(&table, argv, argc) == 0)
+		clean_philos(table.first_philo);
 	if (argv)
 		return (0);
+	// struct timeval	time;
+	// pthread_t		*phils;
+	// int				i;
+
+	// phils = malloc(sizeof(pthread_t) * 4);
+	// pthread_mutex_init(&mutextest, NULL);
+	// i = 0;
+	// while (i < 4)
+	// {
+	// 	pthread_create(&phils[i], NULL, &philosopher, NULL);
+	// 	i++;
+	// }
+	// usleep(500000);
+	// gettimeofday(&time, NULL);
+	// printf("timemain:%li.%i\n", time.tv_sec, time.tv_usec);
+	// i = 0;
+	// while (i < 4)
+	// {
+	// 	pthread_join(phils[i], NULL);
+	// 	printf("received %i\n", i);
+	// 	i++;
+	// }
+	// free(phils);
 }
