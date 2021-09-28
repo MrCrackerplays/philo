@@ -6,7 +6,7 @@
 /*   By: pdruart <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/20 12:27:34 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/09/26 14:17:53 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/09/28 14:47:18 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,52 +16,40 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <philosophers.h>
+#include <philo_threads.h>
+#include <pl_sleep.h>
 
-pthread_mutex_t	mutextest;
+pthread_mutex_t	g_mutextest;
 
 void	*philosopher(void *arg)
 {
 	struct timeval	time;
+	t_table			*table;
 
-	pthread_mutex_lock(&mutextest);
-	usleep(2000000);
+	table = (t_table *)arg;
+	pthread_mutex_lock(&g_mutextest);
+	ms_sleep(table->starvation_duration);
 	gettimeofday(&time, NULL);
-	printf("timethread:%li.%i\n", time.tv_sec, time.tv_usec);
-	pthread_mutex_unlock(&mutextest);
-	return arg;
+	printf("timethread:%li.%06i\n", time.tv_sec, time.tv_usec);
+	pthread_mutex_unlock(&g_mutextest);
+	return (NULL);
 }
+
 //odd grab right fork first, even grab left fork first
+
 int	main(int argc, char **argv)
 {
 	t_table			table;
+	struct timeval	time;
 
 	if (argc != 5 && argc != 6)
 		return (0);
 	if (prepare_table(&table, argv, argc) == 0)
 		clean_philos(table.first_philo);
-	if (argv)
-		return (0);
-	// struct timeval	time;
-	// pthread_t		*phils;
-	// int				i;
-
-	// phils = malloc(sizeof(pthread_t) * 4);
-	// pthread_mutex_init(&mutextest, NULL);
-	// i = 0;
-	// while (i < 4)
-	// {
-	// 	pthread_create(&phils[i], NULL, &philosopher, NULL);
-	// 	i++;
-	// }
-	// usleep(500000);
-	// gettimeofday(&time, NULL);
-	// printf("timemain:%li.%i\n", time.tv_sec, time.tv_usec);
-	// i = 0;
-	// while (i < 4)
-	// {
-	// 	pthread_join(phils[i], NULL);
-	// 	printf("received %i\n", i);
-	// 	i++;
-	// }
-	// free(phils);
+	gettimeofday(&time, NULL);
+	printf("timema1n:%li.%06i\n", time.tv_sec, time.tv_usec);
+	start_threads(&table, &philosopher);
+	ms_sleep(3000);
+	catch_threads(table.first_philo);
+	clean_philos(table.first_philo);
 }

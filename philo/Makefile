@@ -4,17 +4,17 @@ CFLAGS ?= -Wall -Werror -Wextra -pthread
 ifdef DEBUG
 CFLAGS := -g $(CFLAGS)
 endif
-OBJECTS := philosophers.o
+OBJECTS := philosophers.o philo_setup.o philo_thread_utils.o sleep_utils.o
 OBJECTS := $(addprefix obj/,$(OBJECTS))
 INCLUDE := headers
 INCLUDE := $(addprefix -I,$(INCLUDE))
-HEADER_FILES := philosophers.h
+HEADER_FILES := philosophers.h philo_threads.h pl_sleep.h
 HEADER_FILES := $(addprefix headers/,$(HEADER_FILES))
 
 PHIL_COUNT ?= 2
-TIME_TO_DIE ?= 310
-TIME_TO_EAT ?= 200
-TIME_TO_SLEEP ?= 200
+DIE_TIME ?= 310
+EAT_TIME ?= 200
+SLEEP_TIME ?= 200
 
 all: $(NAME)
 
@@ -41,8 +41,7 @@ bonus: all
 
 run: all
 	$(info [philosophers] running $(NAME))
-	./$(NAME) $(PHIL_COUNT) $(TIME_TO_DIE) $(TIME_TO_EAT) $(TIME_TO_SLEEP) \
-		$(EAT_COUNT)
+	./$(NAME) $(PHIL_COUNT) $(DIE_TIME) $(EAT_TIME) $(SLEEP_TIME) $(EAT_COUNT)
 
 debug:
 	$(MAKE) DEBUG=1

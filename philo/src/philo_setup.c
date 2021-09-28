@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   philo_utils.c                                      :+:    :+:            */
+/*   philo_setup.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/26 11:56:17 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/09/26 14:09:27 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/09/28 14:52:22 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
 #include <stdlib.h>
+#include <string.h>
 
 t_philosopher	*new_philo(int seat_number)
 {
@@ -20,9 +21,16 @@ t_philosopher	*new_philo(int seat_number)
 	new_member = malloc(sizeof(t_philosopher));
 	if (new_member == NULL)
 		return (NULL);
+	memset(new_member, '\0', sizeof(t_philosopher));
 	new_member->seat_number = seat_number;
 	new_member->neighbour = new_member;
-	new_member->self = NULL;
+	new_member->self = malloc(sizeof(pthread_t));
+	if (new_member->self == NULL)
+	{
+		free(new_member);
+		return (NULL);
+	}
+	pthread_mutex_init(&new_member->fork, NULL);
 	return (new_member);
 }
 
@@ -101,6 +109,10 @@ void	clean_philos(t_philosopher *philo)
 	if (philo->neighbour->seat_number != 1)
 		clean_philos(philo->neighbour);
 	if (philo->self != NULL)
+	{
 		free(philo->self);
+		philo->self = NULL;
+	}
+	pthread_mutex_destroy(&philo->fork);
 	free(philo);
 }
