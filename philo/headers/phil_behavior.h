@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   philo_threads.h                                    :+:    :+:            */
+/*   phil_behavior.h                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/09/28 13:45:13 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/09/28 14:40:48 by pdruart       ########   odam.nl         */
+/*   Created: 2021/10/05 14:09:20 by pdruart       #+#    #+#                 */
+/*   Updated: 2021/10/05 14:14:17 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_THREADS_H
-# define PHILO_THREADS_H
+#ifndef PHIL_BEHAVIOR_H
+# define PHIL_BEHAVIOR_H
 # include <philosophers.h>
 
-void	start_threads(t_table *table, void *(*function)(void *));
-void	catch_threads(t_philosopher *phil);
+int	phil_eat(t_philosopher *phil, t_table *table);
+int	phil_sleep(t_philosopher *phil, t_table *table);
 
 #endif

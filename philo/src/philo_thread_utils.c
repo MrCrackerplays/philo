@@ -6,11 +6,11 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/28 13:38:54 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/09/28 14:45:33 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/10/05 14:08:58 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <philo_threads.h>
+#include <pl_threads.h>
 
 void	start_threads(t_table *table, void *(*function)(void *))
 {
@@ -21,7 +21,7 @@ void	start_threads(t_table *table, void *(*function)(void *))
 	start_seat = phil->seat_number;
 	while (1)
 	{
-		pthread_create(phil->self, NULL, function, (void *)table);
+		pthread_create(phil->self, NULL, function, (void *)phil);
 		phil = phil->neighbour;
 		if (phil->seat_number == start_seat)
 			break ;

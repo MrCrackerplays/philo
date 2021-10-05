@@ -6,30 +6,36 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/21 11:51:14 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/09/26 14:18:13 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/10/05 13:16:02 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 # include <pthread.h>
+# include <sys/time.h>
 
 typedef struct s_philosopher
 {
 	unsigned int			seat_number;
-	unsigned int			times_eaten;
+	int						times_eaten;
 	pthread_t				*self;
 	struct s_philosopher	*neighbour;
 	pthread_mutex_t			fork;
+	struct timeval			last_meal;
 }	t_philosopher;
 
 typedef struct s_table
 {
 	unsigned int	seats;
-	unsigned int	starvation_duration;
-	unsigned int	meal_duration;
-	unsigned int	sleep_duration;
-	unsigned int	meal_goal;
+	int				starvation_duration;
+	int				meal_duration;
+	int				sleep_duration;
+	int				meal_goal;
+	int				deaths;
+	struct timeval	dinner_time;
+	pthread_mutex_t	printing;
+	pthread_mutex_t	death_check;
 	t_philosopher	*first_philo;
 }	t_table;
 

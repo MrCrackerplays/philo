@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pl_sleep.h                                         :+:    :+:            */
+/*   time_utils.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/09/28 14:13:53 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/05 12:25:36 by pdruart       ########   odam.nl         */
+/*   Created: 2021/10/04 15:08:18 by pdruart       #+#    #+#                 */
+/*   Updated: 2021/10/05 14:56:21 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PL_SLEEP_H
-# define PL_SLEEP_H
-# include <philosophers.h>
+#include <pl_time.h>
 
-int	ms_sleep(int miliseconds, t_table *table,
-		t_philosopher *phil);
+int	is_past_by(struct timeval first, struct timeval second, int ms)
+{
+	int	seconds;
+	int	micro_seconds;
 
-#endif
+	seconds = ms / 1000;
+	micro_seconds = (ms % 1000) * 1000;
+	if (first.tv_sec > second.tv_sec + seconds
+		|| (first.tv_sec == second.tv_sec + seconds
+			&& first.tv_usec >= second.tv_usec + micro_seconds))
+		return (1);
+	return (0);
+}

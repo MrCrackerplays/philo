@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/26 11:56:17 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/09/28 14:52:22 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/10/04 17:10:44 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	prepare_table(t_table *table, char **argv, int argc)
 	table->starvation_duration = ft_atou(argv[2]);
 	table->meal_duration = ft_atou(argv[3]);
 	table->sleep_duration = ft_atou(argv[4]);
-	table->meal_goal = 0;
+	table->meal_goal = -1;
 	i = 1;
 	if (argc == 6)
 		i = ft_atou(argv[5]);
@@ -99,6 +99,7 @@ int	prepare_table(t_table *table, char **argv, int argc)
 			return (0);
 		i++;
 	}
+	gettimeofday(&table->dinner_time, NULL);
 	return (1);
 }
 
