@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 14:11:01 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/05 17:20:36 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/10/07 12:34:32 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	take_fork(pthread_mutex_t *fork, t_philosopher *phil, t_table *table)
 
 int	phil_eat(t_philosopher *phil, t_table *table)
 {
-	int	ret;
+	int				ret;
 	struct timeval	t;
 
 	ret = 0;
@@ -49,11 +49,8 @@ int	phil_eat(t_philosopher *phil, t_table *table)
 		&& take_fork(&phil->neighbour->fork, phil, table) == -1)
 		ret = -1;
 	phil->times_eaten++;
-	printf("voorlastmeal:%li,%06i\n", phil->last_meal.tv_sec, phil->last_meal.tv_usec);
 	if (ret != -1)
 		gettimeofday(&phil->last_meal, NULL);
-	printf("nalastmeal:%li,%06i\n", phil->last_meal.tv_sec, phil->last_meal.tv_usec);
-	printf("meal_duration:%i\n", table->meal_duration);
 	if (ret != -1 && (thread_safe_print("is eating\n", table,
 				phil->seat_number, 0) == -1
 			|| ms_sleep(table->meal_duration, table, phil) == -1))
@@ -61,6 +58,5 @@ int	phil_eat(t_philosopher *phil, t_table *table)
 	pthread_mutex_unlock(&phil->neighbour->fork);
 	pthread_mutex_unlock(&phil->fork);
 	gettimeofday(&t, NULL);
-	printf("naunlocks:%li,%06i\n", t.tv_sec, t.tv_usec);
 	return (ret);
 }

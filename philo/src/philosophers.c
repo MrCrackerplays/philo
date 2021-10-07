@@ -6,7 +6,7 @@
 /*   By: pdruart <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/20 12:27:34 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/05 15:00:19 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/10/07 12:33:43 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	*philosopher(void *arg)
 			|| phil_sleep(phil, get_table()) == -1)
 			break ;
 	}
-	printf("outside while,mealgoal:%i,eaten:%i\n", get_table()->meal_goal, phil->times_eaten);
 	return (arg);
 }
 
