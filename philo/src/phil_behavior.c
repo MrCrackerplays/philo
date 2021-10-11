@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 14:11:01 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/07 12:34:32 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/10/11 17:36:17 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	take_fork(pthread_mutex_t *fork, t_philosopher *phil, t_table *table)
 int	phil_eat(t_philosopher *phil, t_table *table)
 {
 	int				ret;
-	struct timeval	t;
 
 	ret = 0;
 	if (phil->seat_number % 2 == 1
@@ -57,6 +56,5 @@ int	phil_eat(t_philosopher *phil, t_table *table)
 		ret = -1;
 	pthread_mutex_unlock(&phil->neighbour->fork);
 	pthread_mutex_unlock(&phil->fork);
-	gettimeofday(&t, NULL);
 	return (ret);
 }
