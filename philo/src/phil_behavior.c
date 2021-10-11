@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 14:11:01 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/11 17:36:17 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/10/11 17:40:14 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	phil_sleep(t_philosopher *phil, t_table *table)
 int	take_fork(pthread_mutex_t *fork, t_philosopher *phil, t_table *table)
 {
 	pthread_mutex_lock(fork);
+	if (phil->neighbour->seat_number == phil->seat_number)
+		return (ms_sleep(table->starvation_duration + 10, table, phil));
 	return (thread_safe_print("has taken a fork\n", table,
 			phil->seat_number, 0));
 }
