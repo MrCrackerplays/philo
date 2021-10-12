@@ -6,13 +6,13 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/28 13:50:19 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/05 14:56:38 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/10/12 12:49:57 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include <sys/time.h>
 #include <pthread.h>
+#include <unistd.h>
 #include <pl_sleep.h>
 #include <pl_time.h>
 #include <pl_print.h>
@@ -36,9 +36,9 @@ int	check_starve(struct timeval curr_time, t_table *table, t_philosopher *phil)
 int	ms_sleep(int miliseconds, t_table *table,
 		t_philosopher *phil)
 {
-	struct timeval		start_time;
-	struct timeval		current_time;
-	int					ret;
+	struct timeval	start_time;
+	struct timeval	current_time;
+	int				ret;
 
 	gettimeofday(&start_time, NULL);
 	current_time = start_time;

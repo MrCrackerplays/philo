@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/26 11:56:17 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/04 17:10:44 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/10/12 12:47:28 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_philosopher	*add_philo(t_philosopher **existing_philo)
 
 unsigned int	ft_atou(char *str)
 {
-	unsigned int		number;
+	unsigned int	number;
 
 	if (str == NULL)
 		return (0);

@@ -6,14 +6,13 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 14:11:01 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/11 17:40:14 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/10/12 12:48:48 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <phil_behavior.h>
 #include <pl_print.h>
 #include <pl_sleep.h>
-#include <stdio.h>
 
 int	phil_sleep(t_philosopher *phil, t_table *table)
 {
@@ -38,7 +37,7 @@ int	take_fork(pthread_mutex_t *fork, t_philosopher *phil, t_table *table)
 
 int	phil_eat(t_philosopher *phil, t_table *table)
 {
-	int				ret;
+	int	ret;
 
 	ret = 0;
 	if (phil->seat_number % 2 == 1

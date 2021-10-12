@@ -6,19 +6,13 @@
 /*   By: pdruart <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/20 12:27:34 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/07 12:33:43 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/10/12 12:44:44 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <pthread.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <philosophers.h>
 #include <pl_threads.h>
-#include <pl_print.h>
-#include <pl_sleep.h>
-#include <pl_time.h>
 #include <phil_behavior.h>
 
 t_table	*get_table(void)
