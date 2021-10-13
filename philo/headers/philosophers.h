@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/21 11:51:14 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/05 13:16:02 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/10/13 16:58:04 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ typedef struct s_philosopher
 	unsigned int			seat_number;
 	int						times_eaten;
 	pthread_t				*self;
-	struct s_philosopher	*neighbour;
 	pthread_mutex_t			fork;
 	struct timeval			last_meal;
+	struct s_philosopher	*neighbour;
 }	t_philosopher;
 
 typedef struct s_table
