@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/26 11:56:17 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/12 12:47:28 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/11/15 12:43:51 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,12 @@ int	prepare_table(t_table *table, char **argv, int argc)
 	return (1);
 }
 
-void	clean_philos(t_philosopher *philo)
+void	clean_philos(t_philosopher *philo, t_table *table)
 {
-	if (philo == NULL)
+	if (philo == NULL || table == NULL)
 		return ;
 	if (philo->neighbour->seat_number != 1)
-		clean_philos(philo->neighbour);
+		clean_philos(philo->neighbour, table);
 	if (philo->self != NULL)
 	{
 		free(philo->self);

@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/21 11:51:14 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/13 16:58:04 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/11/15 12:43:21 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ typedef struct s_table
 	int				sleep_duration;
 	int				meal_goal;
 	int				deaths;
+	int				finished;
 	struct timeval	dinner_time;
 	pthread_mutex_t	printing;
 	pthread_mutex_t	death_check;
+	pthread_mutex_t	finish_setting;
 	t_philosopher	*first_philo;
 }	t_table;
 
 int		prepare_table(t_table *table, char **argv, int argc);
-void	clean_philos(t_philosopher *philo);
+void	clean_philos(t_philosopher *philo, t_table *table);
 
 #endif
