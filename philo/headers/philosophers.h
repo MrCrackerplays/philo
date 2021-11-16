@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/21 11:51:14 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/11/15 12:43:21 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/11/16 12:58:49 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_table
 	t_philosopher	*first_philo;
 }	t_table;
 
-int		prepare_table(t_table *table, char **argv, int argc);
-void	clean_philos(t_philosopher *philo, t_table *table);
+int	prepare_table(t_table *table, char **argv, int argc);
+int	clean_philos(t_philosopher *philo, t_table *table);
 
 #endif

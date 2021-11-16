@@ -6,13 +6,13 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/30 11:31:50 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/12 12:46:39 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/11/16 17:27:44 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdio.h>
-#include <pthread.h>
+#include <philo_mutex.h>
 #include <pl_print.h>
 
 unsigned int	relative_time(t_table *table)
@@ -40,14 +40,18 @@ int	thread_safe_print(char *str, t_table *table, unsigned int seat_number,
 	ret = 0;
 	if (die == 0)
 	{
-		pthread_mutex_lock(&table->printing);
-		pthread_mutex_lock(&table->death_check);
+		if (philo_mutex_lock(&table->printing, table) < 0)
+			ret = -1;
+		if (philo_mutex_lock(&table->death_check, table) < 0)
+			ret = -1;
 		if (table->deaths > 0)
 			ret = -1;
-		pthread_mutex_unlock(&table->death_check);
+		if (philo_mutex_unlock(&table->death_check, table) < 0)
+			ret = -1;
 		if (ret == 0)
 			ret = printf("%u %u %s", relative_time(table), seat_number, str);
-		pthread_mutex_unlock(&table->printing);
+		if (philo_mutex_unlock(&table->printing, table) < 0)
+			ret = -1;
 	}
 	else
 	{

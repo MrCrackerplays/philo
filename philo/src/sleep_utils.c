@@ -6,12 +6,12 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/28 13:50:19 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/12 12:49:57 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/11/16 17:28:03 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/time.h>
-#include <pthread.h>
+#include <philo_mutex.h>
 #include <unistd.h>
 #include <pl_sleep.h>
 #include <pl_time.h>
@@ -33,6 +33,20 @@ int	check_starve(struct timeval curr_time, t_table *table, t_philosopher *phil)
 	return (ret);
 }
 
+int	check_death(t_table *table)
+{
+	int	ret;
+
+	ret = 0;
+	if (philo_mutex_lock(&table->death_check, table) < 0)
+		ret = 1;
+	if (table->deaths > 0)
+		ret = 1;
+	if (philo_mutex_unlock(&table->death_check, table) < 0)
+		ret = 1;
+	return (ret);
+}
+
 int	ms_sleep(int miliseconds, t_table *table,
 		t_philosopher *phil)
 {
@@ -45,17 +59,17 @@ int	ms_sleep(int miliseconds, t_table *table,
 	ret = 0;
 	while (ret == 0 && is_past_by(current_time, start_time, miliseconds) == 0)
 	{
-		pthread_mutex_lock(&table->death_check);
-		if (check_starve(current_time, table, phil) == -1)
+		if (philo_mutex_lock(&table->death_check, table) < 0)
 			ret = -1;
-		pthread_mutex_unlock(&table->death_check);
+		if (ret != -1 && check_starve(current_time, table, phil) == -1)
+			ret = -1;
+		if (philo_mutex_unlock(&table->death_check, table) < 0)
+			ret = -1;
 		if (ret != -1 && usleep(100) == -1)
 			ret = -1;
 		gettimeofday(&current_time, NULL);
 	}
-	pthread_mutex_lock(&table->death_check);
-	if (table->deaths > 0)
+	if (check_death(table))
 		ret = -1;
-	pthread_mutex_unlock(&table->death_check);
 	return (ret);
 }

@@ -5,12 +5,12 @@ ifdef DEBUG
 CFLAGS := -g $(CFLAGS)
 endif
 OBJECTS := philosophers.o philo_setup.o philo_thread_utils.o sleep_utils.o \
-	philo_print.o time_utils.o phil_behavior.o
+	philo_print.o time_utils.o phil_behavior.o philo_mutex.o
 OBJECTS := $(addprefix obj/,$(OBJECTS))
 INCLUDE := headers
 INCLUDE := $(addprefix -I,$(INCLUDE))
 HEADER_FILES := philosophers.h pl_threads.h pl_sleep.h pl_print.h pl_time.h \
-	phil_behavior.h
+	phil_behavior.h philo_mutex.h
 HEADER_FILES := $(addprefix headers/,$(HEADER_FILES))
 
 PHIL_COUNT ?= 2

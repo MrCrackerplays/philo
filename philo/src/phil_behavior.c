@@ -6,11 +6,12 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 14:11:01 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/11/15 11:52:24 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/11/16 17:16:49 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <phil_behavior.h>
+#include <philo_mutex.h>
 #include <pl_print.h>
 #include <pl_sleep.h>
 
@@ -28,7 +29,8 @@ int	take_fork(pthread_mutex_t *fork, t_philosopher *phil, t_table *table)
 {
 	int	ret;
 
-	pthread_mutex_lock(fork);
+	if (philo_mutex_lock(fork, table) < 0)
+		return (-1);
 	ret = thread_safe_print("has taken a fork\n", table, phil->seat_number, 0);
 	if (phil->neighbour->seat_number == phil->seat_number)
 		return (ms_sleep(table->starvation_duration + 10, table, phil));
@@ -57,7 +59,9 @@ int	phil_eat(t_philosopher *phil, t_table *table)
 				phil->seat_number, 0) == -1
 			|| ms_sleep(table->meal_duration, table, phil) == -1))
 		ret = -1;
-	pthread_mutex_unlock(&phil->neighbour->fork);
-	pthread_mutex_unlock(&phil->fork);
+	if (philo_mutex_unlock(&phil->neighbour->fork, table) < 0)
+		ret = -1;
+	if (philo_mutex_unlock(&phil->fork, table) < 0)
+		ret = -1;
 	return (ret);
 }
