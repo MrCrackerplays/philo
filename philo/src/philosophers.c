@@ -6,7 +6,7 @@
 /*   By: pdruart <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/20 12:27:34 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/11/16 17:20:37 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/11/17 13:36:50 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ void	*philosopher(void *arg)
 	while (get_table()->finished >= 0
 		&& (unsigned int)get_table()->finished < get_table()->seats)
 	{
-		if (phil_eat(phil, get_table()) == -1
-			|| phil_sleep(phil, get_table()) == -1)
-			break ;
+		if (phil_eat(phil, get_table()) == -1)
+			get_table()->finished = -1;
 		if (get_table()->finished >= 0 && get_table()->meal_goal != -1
 			&& phil->times_eaten == get_table()->meal_goal)
 		{
@@ -45,6 +44,8 @@ void	*philosopher(void *arg)
 					get_table()) < 0)
 				get_table()->finished = -1;
 		}
+		if (get_table()->finished >= 0 && phil_sleep(phil, get_table()) == -1)
+			get_table()->finished = -1;
 	}
 	return (arg);
 }
