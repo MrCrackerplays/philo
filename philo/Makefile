@@ -22,20 +22,20 @@ all: $(NAME)
 
 $(NAME): $(OBJECTS)
 	$(info [philosophers] compiling $(NAME))
-	@$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
 
 obj/%.o: src/%.c $(HEADER_FILES)
 	@mkdir -p obj
-	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
 	$(info [philosophers] cleaning $(NAME))
-	@rm -f $(OBJECTS)
+	rm -f $(OBJECTS)
 	@rm -rf obj
 
 fclean: clean
 	$(info [philosophers] fully cleaning $(NAME))
-	@rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
