@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/24 14:17:54 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/11/24 14:24:18 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/11/26 14:41:43 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,13 @@
 # include <philosophers.h>
 # include <pl_time.h>
 
-void	start_death(t_table *table, pthread_t *grim_reaper);
-void	catch_death(pthread_t *grim_reaper);
+typedef struct s_death_target
+{
+	t_philosopher	*phil;
+	t_table			*table;
+}	t_death_target;
+
+void	start_death(t_death_target *target);
+void	catch_death(t_philosopher *phil);
 
 #endif

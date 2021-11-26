@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/26 11:56:17 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/11/16 14:31:52 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/11/26 14:36:33 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,7 @@ t_philosopher	*new_philo(int seat_number, t_table *table)
 	memset(new_member, '\0', sizeof(t_philosopher));
 	new_member->seat_number = seat_number;
 	new_member->neighbour = new_member;
-	new_member->self = malloc(sizeof(pthread_t));
-	if (new_member->self == NULL)
-	{
-		free(new_member);
-		return (NULL);
-	}
+	new_member->death_watch = 0;
 	philo_mutex_init(&new_member->fork, table);
 	return (new_member);
 }
@@ -110,11 +105,6 @@ int	clean_philos(t_philosopher *philo, t_table *table)
 		return (1);
 	if (philo->neighbour->seat_number != 1)
 		clean_philos(philo->neighbour, table);
-	if (philo->self != NULL)
-	{
-		free(philo->self);
-		philo->self = NULL;
-	}
 	philo_mutex_destroy(&philo->fork, table);
 	free(philo);
 	return (1);

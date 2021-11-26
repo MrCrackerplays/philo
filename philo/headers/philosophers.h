@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/21 11:51:14 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/11/16 12:58:49 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/11/26 14:20:04 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ typedef struct s_philosopher
 {
 	unsigned int			seat_number;
 	int						times_eaten;
-	pthread_t				*self;
+	int						death_watch;
+	pthread_t				self;
+	pthread_t				grim_reaper;
 	pthread_mutex_t			fork;
 	struct timeval			last_meal;
 	struct s_philosopher	*neighbour;

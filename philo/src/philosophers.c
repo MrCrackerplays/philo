@@ -6,7 +6,7 @@
 /*   By: pdruart <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/20 12:27:34 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/11/24 16:43:34 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/11/26 14:17:31 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <philosophers.h>
 #include <pl_threads.h>
 #include <phil_behavior.h>
-#include <death.h>
 
 t_table	*get_table(void)
 {
@@ -63,8 +62,6 @@ void	clean_table(void)
 
 int	main(int argc, char **argv)
 {
-	pthread_t	grim_reaper;
-
 	if (argc != 5 && argc != 6)
 		return (1);
 	if (prepare_table(get_table(), argv, argc) == 0)
@@ -75,9 +72,7 @@ int	main(int argc, char **argv)
 	philo_mutex_init(&get_table()->death_check, get_table());
 	gettimeofday(&get_table()->dinner_time, NULL);
 	start_threads(get_table(), &philosopher);
-	start_death(get_table(), &grim_reaper);
 	catch_threads(get_table()->first_philo);
-	catch_death(&grim_reaper);
 	clean_philos(get_table()->first_philo, get_table());
 	clean_table();
 	if (get_table()->finished < 0)
