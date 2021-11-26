@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/28 13:38:54 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/10/05 14:08:58 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/11/23 16:11:45 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	start_threads(t_table *table, void *(*function)(void *))
 	start_seat = phil->seat_number;
 	while (1)
 	{
-		pthread_create(phil->self, NULL, function, (void *)phil);
+		if (pthread_create(phil->self, NULL, function, (void *)phil) < 0)
+			table->finished = -1;
 		phil = phil->neighbour;
 		if (phil->seat_number == start_seat)
 			break ;
