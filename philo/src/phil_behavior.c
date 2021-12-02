@@ -6,7 +6,7 @@
 /*   By: pdruart <pdruart@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 14:11:01 by pdruart       #+#    #+#                 */
-/*   Updated: 2021/11/26 14:42:59 by pdruart       ########   odam.nl         */
+/*   Updated: 2021/12/02 12:25:23 by pdruart       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <pl_print.h>
 #include <pl_sleep.h>
 #include <death.h>
+#include <unistd.h>
 
 int	phil_sleep(t_philosopher *phil, t_table *table)
 {
@@ -31,6 +32,8 @@ int	take_fork(pthread_mutex_t *fork, t_philosopher *phil, t_table *table)
 	t_death_target	target;
 	int				ret;
 
+	if (table->seats % 2 == 1 && phil->seat_number % 2)
+		usleep(500);
 	target.phil = phil;
 	target.table = table;
 	start_death(&target);
